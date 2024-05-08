@@ -1,5 +1,6 @@
 package theater_project;
 
-public class main {
-
+class Chair {
+    User user;
+    
 }
