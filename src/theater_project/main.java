@@ -1,6 +1,10 @@
 package theater_project;
+/**
+ * main
+ */
+public class main {
 
-class Chair {
-    User user;
-    
+    public static void main(String[] args) {
+        MovieGui gui = new MovieGui();
+    }
 }
