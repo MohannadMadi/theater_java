@@ -1,6 +1,8 @@
 package theater_project;
 
-class Chair {
-    User user;
-    
+import javax.swing.JFrame;
+
+class Main extends JFrame{
+
+
 }

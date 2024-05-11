@@ -1,3 +1,5 @@
+package theater_project.MoviesPage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
