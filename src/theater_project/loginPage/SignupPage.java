@@ -1,4 +1,4 @@
-package theater_project;
+package theater_project.loginPage;
 
 import java.awt.*;
 import javax.swing.*;

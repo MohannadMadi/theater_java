@@ -1,4 +1,4 @@
-package theater_project;
+package theater_project.loginPage;
 
 public class asasy {
 
