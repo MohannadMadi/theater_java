@@ -1,21 +1,27 @@
 package theater_project;
-import javax.swing.border.Border;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
-
+import javax.swing.border.LineBorder;
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 
 public class MovieGui extends JFrame implements ActionListener    {
     JButton button;
      MovieGui(){
-        ImageIcon icon = new ImageIcon("icon.png");
+        JPanel panel = new JPanel(null);
+        panel.setBounds(0, 0, 800, 600);
+        panel.setBackground(new Color(0x333333));
+        
+        ImageIcon icon = new ImageIcon("images.jpg");
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(icon);
-        imageLabel.setBounds(500, 500, 50, 50);
-
+        imageLabel.setBounds(50, 150, 195, 275);
+        imageLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        
         JLabel nameLabel = new JLabel();
         nameLabel.setText("Name: ");// concatenate OR REPLACE the name of the movie with the "Name" inside setText
         nameLabel.setForeground(new Color(0xFFFFFF));
@@ -37,24 +43,26 @@ public class MovieGui extends JFrame implements ActionListener    {
         actorLabel.setForeground(new Color(0xFFFFFF));
         
         JButton button = new JButton();
-        button.setBounds(300, 460, 70, 30);
-        button.setText("Click");
-        button.setBackground(new Color(0x0099ed));
+        button.setBounds(800, 385, 120, 40);
+        button.setText("Book Ticket");
+        button.setBackground(new Color(0x1D99D1));
         button.setFocusable(false);
-        button.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));        
-        this.getContentPane().setBackground(new Color(0x333333));
+        button.setFont(new FontUIResource("Helvetica", Font.BOLD, 13));
+        button.setBorder(null);
         //this.setLayout(new GridLayout(9,1, 5, 5));
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(null);
-        this.setSize(800, 600);
-        this.add(nameLabel);
-        this.add(descriptionLabel);
-        this.add(directorLabel);
-        this.add(actorLabel);
-        this.add(imageLabel);
-        this.add(button);
+        this.setSize(1000, 600);
+        this.setLayout(new BorderLayout());
+        this.add(panel, BorderLayout.CENTER);
+        panel.add(nameLabel);
+        panel.add(descriptionLabel);
+        panel.add(directorLabel);
+        panel.add(actorLabel);
+        panel.add(imageLabel);
+        panel.add(button);
         this.setVisible(true);
-
 
     }
 
