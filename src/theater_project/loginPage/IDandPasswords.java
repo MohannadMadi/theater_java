@@ -13,6 +13,6 @@ public class IDandPasswords {
     }
 
     public HashMap getLoginInfo(){
-return logininfo;
-}
+        return logininfo;
+    }
 }

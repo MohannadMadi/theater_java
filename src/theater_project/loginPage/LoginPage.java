@@ -17,6 +17,9 @@ public class LoginPage implements ActionListener{
     JLabel userIDLabel = new JLabel("userID:");
     JLabel userPasswordLabel = new JLabel("password:");
     JLabel messageLabel = new JLabel();
+    JButton exitButton = new JButton("Exit");
+    JLabel titleLabel = new JLabel("Login Page");
+
     HashMap<String,String> logininfo = new HashMap<String,String>();
 
     LoginPage(HashMap<String,String> loginInfoOriginal){
@@ -29,6 +32,9 @@ public class LoginPage implements ActionListener{
         messageLabel.setBounds(125,250,250,35);
         messageLabel.setFont(new Font(null,Font.ITALIC,25));
 
+        titleLabel.setBounds(180, 10, 100, 25);
+        titleLabel.setFont(new Font(null, Font.BOLD, 20));
+
         userIDField.setBounds(125,100,200,25);
         userPasswordField.setBounds(125,150,200,25);
 
@@ -39,6 +45,11 @@ public class LoginPage implements ActionListener{
         SignupButton.setBounds(225,200,100,25);
         SignupButton.setFocusable(false);
         SignupButton.addActionListener(this);
+
+        exitButton.setBounds(350, 10, 60, 25);
+        exitButton.setFocusable(false);
+        exitButton.addActionListener(this);
+
 
         frame.add(userIDLabel);
         frame.add(userPasswordLabel);
@@ -51,7 +62,8 @@ public class LoginPage implements ActionListener{
         frame.setSize(420,420);
         frame.setLayout(null);
         frame.setVisible(true);
-        
+        frame.add(exitButton);
+        frame.add(titleLabel);
 
     }
 
@@ -60,7 +72,8 @@ public class LoginPage implements ActionListener{
 
         if(e.getSource()== SignupButton) {
             frame.dispose();
-            SignupPage signuppage = new SignupPage();
+            SignupPage signuppage = new SignupPage(logininfo);
+
         }
 
         if(e.getSource()==loginButton) {
@@ -68,13 +81,15 @@ public class LoginPage implements ActionListener{
             String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
 
-            if(logininfo.containsKey(userID)) {
-                if(logininfo.get(userID).equals(password)) {
-                    messageLabel.setForeground(Color.green);
-                    messageLabel.setText("Login successful");
-                    frame.dispose();
-                    WelcomePage welcomePage = new WelcomePage(userID);
-                }
+
+                if(logininfo.containsKey(userID)) {
+                    if(logininfo.get(userID).equals(password)) {
+                        messageLabel.setForeground(Color.green);
+                        messageLabel.setText("Login successful");
+                        frame.dispose();
+
+                        WelcomePage welcomePage = new WelcomePage(userID, logininfo);
+                    }
                 else {
                     messageLabel.setForeground(Color.red);
                     messageLabel.setText("Wrong password");
@@ -85,6 +100,11 @@ public class LoginPage implements ActionListener{
                 messageLabel.setForeground(Color.red);
                 messageLabel.setText("username not found");
             }
+        }
+        if(e.getSource()==exitButton) {
+
+                frame.dispose();
+
         }
     }
 }
