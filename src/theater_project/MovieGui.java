@@ -16,7 +16,7 @@ public class MovieGui extends JFrame implements ActionListener    {
         panel.setBounds(0, 0, 800, 600);
         panel.setBackground(new Color(0x333333));
         
-        ImageIcon icon = new ImageIcon("images.jpg");
+        ImageIcon icon = new ImageIcon("src\\theater_project\\images.jpg");
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(icon);
         imageLabel.setBounds(50, 150, 195, 275);
