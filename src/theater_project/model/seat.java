@@ -1,6 +1,6 @@
 package theater_project.model;
 
-import java.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class Seat {
     User owner;
