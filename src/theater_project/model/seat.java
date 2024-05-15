@@ -1,5 +1,11 @@
 package theater_project.model;
 
-public class seat {
-    
+import java.LocalDateTime;
+
+public class Seat {
+    User owner;
+    Movie movie;
+    boolean available;
+    double price;
+    LocalDateTime sLocalDateTime;
 }
