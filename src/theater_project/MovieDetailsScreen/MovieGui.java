@@ -1,4 +1,4 @@
-package theater_project;
+package theater_project.MovieDetailsScreen;
 
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
