@@ -10,4 +10,5 @@ public class Movie {
     String details;
     ImageIcon poster;
     LocalDateTime[] dateTimes;
+
 }
