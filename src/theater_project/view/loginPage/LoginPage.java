@@ -32,7 +32,7 @@ public class LoginPage implements ActionListener{
         messageLabel.setBounds(125,250,250,35);
         messageLabel.setFont(new Font(null,Font.ITALIC,25));
 
-        titleLabel.setBounds(180, 10, 100, 25);
+        titleLabel.setBounds(180, 10, 150, 25);
         titleLabel.setFont(new Font(null, Font.BOLD, 20));
 
         userIDField.setBounds(125,100,200,25);
