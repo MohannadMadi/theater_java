@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="theater_project.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-05-15T12:20:00" hostname="SOSO" time="0.017">
-  <properties/>
-  <testcase name="appHasAGreeting()" classname="theater_project.AppTest" time="0.017"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
