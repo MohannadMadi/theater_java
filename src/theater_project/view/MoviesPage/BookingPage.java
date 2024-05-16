@@ -1,4 +1,4 @@
-package theater_project.MoviesPage;
+package theater_project.view.MoviesPage;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package theater_project.loginPage;
+package theater_project.view.loginPage;
 
 import java.util.HashMap;
 public class IDandPasswords {

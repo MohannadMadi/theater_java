@@ -1,5 +1,8 @@
 package theater_project;
-public class Main {
+
+import javax.swing.JFrame;
+
+public class Main extends JFrame {
 
     public static void main(String[] args) {
 
