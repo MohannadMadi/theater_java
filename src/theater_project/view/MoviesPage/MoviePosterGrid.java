@@ -1,4 +1,4 @@
-package theater_project.MoviesPage;import java.awt.*;
+package theater_project.view.MoviesPage;import java.awt.*;
 
 
 import java.awt.event.*;
@@ -55,21 +55,21 @@ public class MoviePosterGrid {
         };
 
         // Movie 1
-        addMovie(moviePostersPanel, "src\\theater_project\\Media\\ghost_busters.jpg", "Ghost Busters", "Adventure | Comedy | Sci-Fi", width, height, movieClickListener);
+        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\Media\\\\ghost_busters.jpg", "Ghost Busters", "Adventure | Comedy | Sci-Fi", width, height, movieClickListener);
         // Movie 2
-        addMovie(moviePostersPanel, "src\\theater_project\\Media\\GODZILLA_X_KONG.jpg", "Godzilla vs Kong", "Action | Sci-Fi | Thriller", width, height, movieClickListener);
+        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\Media\\\\GODZILLA_X_KONG.jpg", "Godzilla vs Kong", "Action | Sci-Fi | Thriller", width, height, movieClickListener);
         // Movie 3
-        addMovie(moviePostersPanel, "src\\theater_project\\Media\\kingdom_of_planets_of_apes.jpg", "Planet of the Apes", "Action | Adventure | Sci-Fi", width, height, movieClickListener);
+        addMovie(moviePostersPanel, "src\\theater_project\\assets\\Media\\kingdom_of_planets_of_apes.jpg", "Planet of the Apes", "Action | Adventure | Sci-Fi", width, height, movieClickListener);
         // Movie 4
-        addMovie(moviePostersPanel, "src\\theater_project\\Media\\LAND_OF_BAD.jpg", "Land of Bad", "Action | Thriller", width, height, movieClickListener);
+        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\Media\\\\LAND_OF_BAD.jpg", "Land of Bad", "Action | Thriller", width, height, movieClickListener);
         // Movie 5
-        addMovie(moviePostersPanel,"src\\theater_project\\Media\\Escape.jpg","Escape","Thriller",width,height,movieClickListener);
+        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\Escape.jpg","Escape","Thriller",width,height,movieClickListener);
         // Movie 6
-        addMovie(moviePostersPanel,"src\\theater_project\\Media\\The_first_omen.jpg","The First Omen","Horror",width,height,movieClickListener);
+        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\The_first_omen.jpg","The First Omen","Horror",width,height,movieClickListener);
         // Movie 7
-        addMovie(moviePostersPanel,"src\\theater_project\\Media\\Kung_Fu_panda_4.jpg","Kung Fu Panda 4","Animation",width,height,movieClickListener);
+        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\Kung_Fu_panda_4.jpg","Kung Fu Panda 4","Animation",width,height,movieClickListener);
         // Movie 8
-        addMovie(moviePostersPanel,"src\\theater_project\\Media\\3almashi.jpg","3ALMASHI","Thriller",width,height,movieClickListener);
+        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\3almashi.jpg","3ALMASHI","Thriller",width,height,movieClickListener);
 
 
         // Footer panel
