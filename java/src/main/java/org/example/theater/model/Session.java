@@ -1,26 +1,27 @@
 package org.example.theater.model;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 public class Session {
-    private LocalDateTime dateTime;
+    private String dateTime;
     private List<Integer> takenSeatIds;
 
     public Session() {
     }
 
-    public Session(LocalDateTime dateTime, List<Integer> takenSeatIds) {
+    public Session(String dateTime, List<Integer> takenSeatIds) {
         this.dateTime = dateTime;
         this.takenSeatIds = takenSeatIds;
     }
 
     // Getters and setters
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
