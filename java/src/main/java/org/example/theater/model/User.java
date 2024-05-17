@@ -2,17 +2,17 @@ package org.example.theater.model;
 
 
 public class User {
-    private static int uid;
+    private   int uid;
     private String name;
     private String email;
     private String password;
-    private Session[] ownedSeats;
+    private ReservationForm[] reservationForms;
 User(){}
-    public User(String name, String email, String password, Session[] ownedSeats) {
+    public User(String name, String email, String password, ReservationForm []reservationForm) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.ownedSeats = ownedSeats;
+        this.reservationForms=reservationForm;
     }
 
 
@@ -21,7 +21,7 @@ User(){}
     }
 
     public void setUid(int uid) {
-        User.uid = uid;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -48,11 +48,12 @@ User(){}
         this.password = password;
     }
 
-    public Session[] getOwnedSeats() {
-        return ownedSeats;
+
+    public ReservationForm[] getReservationForms() {
+        return reservationForms;
     }
 
-    public void setOwnedSeats(Session[] ownedSeats) {
-        this.ownedSeats = ownedSeats;
+    public void setReservationForms(ReservationForm[] reservationForms) {
+        this.reservationForms = reservationForms;
     }
 }

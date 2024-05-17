@@ -25,6 +25,12 @@ public class UserHandler {
         if (file.exists()) {
             try {
                 users = mapper.readValue(file, new TypeReference<List<User>>() {});
+           if (users.size()>0){
+               nextUid=users.getLast().getUid()+1;
+           }
+           else {
+               nextUid=1;
+           }
             } catch (IOException e) {
                 e.printStackTrace();
                 users = new ArrayList<>();
@@ -33,15 +39,14 @@ public class UserHandler {
             users = new ArrayList<>();
         }
         // Set nextUid to the highest uid + 1
-        nextUid = users.stream().mapToInt(User::getUid).max().orElse(0) + 1;
-    }
+     }
 
     public void signUp(User user) {
         if (user != null && user.getEmail() != null && !user.getEmail().isEmpty() &&
                 user.getPassword() != null && !user.getPassword().isEmpty()) { // Perform null and empty checks
             // Check if a user with the same email already exists
             if (getUserByEmail(user.getEmail()) == null) {
-                user.setUid(nextUid++);
+                user.setUid(nextUid);
                 users.add(user);
                 saveUsers();
             } else {
