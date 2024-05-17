@@ -1,9 +1,17 @@
 package org.example.theater.view.loginPage;
 
 
+import org.example.theater.dataHandler.UserHandler;
+import org.example.theater.model.Movie;
+import org.example.theater.model.ReservationForm;
+import org.example.theater.model.Session;
+import org.example.theater.model.User;
+import org.example.theater.view.seatsPage.CinemaSeating;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 import javax.swing.*;
 
 
@@ -15,17 +23,17 @@ public class LoginPage implements ActionListener{
     JButton SignupButton = new JButton("Sign up");
     JTextField userIDField = new JTextField();
     JPasswordField userPasswordField = new JPasswordField();
-    JLabel userIDLabel = new JLabel("userID:");
+    JLabel userIDLabel = new JLabel("Email:");
     JLabel userPasswordLabel = new JLabel("password:");
     JLabel messageLabel = new JLabel();
     JButton exitButton = new JButton("Exit");
     JLabel titleLabel = new JLabel("Login Page");
 
-    HashMap<String,String> logininfo = new HashMap<String,String>();
-
-    LoginPage(HashMap<String,String> loginInfoOriginal){
-
-        logininfo = loginInfoOriginal;
+Movie movie;
+Session session;
+    public LoginPage(Movie movie,Session session){
+        this.movie = movie; // Assigning movie parameter to class variable
+        this.session = session;
 
         userIDLabel.setBounds(50,100,75,25);
         userPasswordLabel.setBounds(50,150,75,25);
@@ -70,38 +78,32 @@ public class LoginPage implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if(e.getSource()== SignupButton) {
-            frame.dispose();
-            SignupPage signuppage = new SignupPage(logininfo);
+            String userID = userIDField.getText();
+            String password = String.valueOf(userPasswordField.getPassword());
+            if (userID!=""&&password!=""){
+                UserHandler userHandler=new UserHandler();
 
+                ReservationForm form = new ReservationForm(movie.getId(), Arrays.asList(session));
+                ReservationForm[] forms=new ReservationForm[]{form};
+                userHandler.signUp(new User("",userID,password,forms));
+            }
         }
 
         if(e.getSource()==loginButton) {
 
             String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
-
-
-                if(logininfo.containsKey(userID)) {
-                    if(logininfo.get(userID).equals(password)) {
-                        messageLabel.setForeground(Color.green);
-                        messageLabel.setText("Login successful");
-                        frame.dispose();
-
-                        WelcomePage welcomePage = new WelcomePage(userID, logininfo);
-                    }
-                else {
-                    messageLabel.setForeground(Color.red);
-                    messageLabel.setText("Wrong password");
-                }
-
+            UserHandler userHandler=new UserHandler();
+            User user=userHandler.signIn(userID,password);
+            if (user!=null){
+                new CinemaSeating(movie,user,session);
             }
             else {
-                messageLabel.setForeground(Color.red);
-                messageLabel.setText("username not found");
+                JOptionPane.showMessageDialog(this.frame, "error logging in, try signing up"   ,"ad", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         if(e.getSource()==exitButton) {
 
                 frame.dispose();

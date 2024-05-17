@@ -1,13 +1,15 @@
 package org.example.theater.view.MoviesPage;
 
+import org.example.theater.dataHandler.MovieHandler;
+import org.example.theater.model.Movie;
+import org.example.theater.model.User;
+
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+        import java.awt.event.*;
+        import javax.swing.*;
 
 public class MoviePosterGrid {
-    public MoviePosterGrid() {}
-
-    public static void main(String[] args) {
+    public MoviePosterGrid(User user) {
         JFrame frame = new JFrame();
         frame.setTitle("Movies");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,30 +50,15 @@ public class MoviePosterGrid {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel clickedLabel = (JLabel)e.getSource();
-                ImageIcon moviePoster = (ImageIcon) clickedLabel.getIcon();
-                String movieName = (String) clickedLabel.getClientProperty("title");
-                new BookingPage(moviePoster, movieName);
+                Integer movieId = (Integer) clickedLabel.getClientProperty("id");
+                MovieHandler movieHandler=new MovieHandler();
+                Movie movie=movieHandler.getMovieById(movieId);
+                System.out.println(movie.getId());
+                new BookingPage(movie,user);
             }
         };
-
-        // Movie 1
-        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\Media\\\\ghost_busters.jpg", "Ghost Busters", "Adventure | Comedy | Sci-Fi", width, height, movieClickListener);
-        // Movie 2
-        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\images\\\\GODZILLA_X_KONG.jpg", "Godzilla vs Kong", "Action | Sci-Fi | Thriller", width, height, movieClickListener);
-        // Movie 3
-        addMovie(moviePostersPanel, "src\\theater_project\\assets\\Media\\kingdom_of_planets_of_apes.jpg", "Planet of the Apes", "Action | Adventure | Sci-Fi", width, height, movieClickListener);
-        // Movie 4
-        addMovie(moviePostersPanel, "src\\theater_project\\assets\\\\Media\\\\LAND_OF_BAD.jpg", "Land of Bad", "Action | Thriller", width, height, movieClickListener);
-        // Movie 5
-        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\Escape.jpg","Escape","Thriller",width,height,movieClickListener);
-        // Movie 6
-        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\The_first_omen.jpg","The First Omen","Horror",width,height,movieClickListener);
-        // Movie 7
-        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\Kung_Fu_panda_4.jpg","Kung Fu Panda 4","Animation",width,height,movieClickListener);
-        // Movie 8
-        addMovie(moviePostersPanel,"src\\theater_project\\assets\\\\Media\\\\3almashi.jpg","3ALMASHI","Thriller",width,height,movieClickListener);
-
-
+        addMovies(moviePostersPanel,width,height,movieClickListener);
+        // Movie 1a
         // Footer panel
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(Color.black);
@@ -88,24 +75,31 @@ public class MoviePosterGrid {
         frame.setVisible(true);
     }
 
-    private static void addMovie(JPanel panel, String imagePath, String title, String genre, int width, int height, MouseListener listener) {
-        ImageIcon imageIcon = new ImageIcon(imagePath);
-        Image image = imageIcon.getImage();
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(scaledImage);
-        JLabel label = new JLabel(imageIcon);
-        label.addMouseListener(listener);
-        label.putClientProperty("title", title);
-        JPanel moviePanel = new JPanel(new BorderLayout());
-        moviePanel.add(label, BorderLayout.NORTH);
+    private static void addMovies(JPanel panel, int width, int height, MouseListener listener) {
+        MovieHandler movieHandler=new MovieHandler();
+        for (int i = 0; i <movieHandler.getMovies().size() ; i++) {
+            Movie currentMovie=movieHandler.getMovies().get(i);
+            ImageIcon imageIcon = new ImageIcon(currentMovie.getPosterUrl());
+            Image image = imageIcon.getImage();
+            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            imageIcon = new ImageIcon(scaledImage);
+            JLabel label = new JLabel(imageIcon);
+            label.addMouseListener(listener);
+            label.putClientProperty("title", currentMovie.getName());
+            label.putClientProperty("id",currentMovie.getId());
 
-        JPanel textPanel = new JPanel(new GridLayout(2, 1));
-        JLabel titleLabel = new JLabel(title);
-        JLabel genreLabel = new JLabel(genre);
-        textPanel.add(titleLabel);
-        textPanel.add(genreLabel);
-        moviePanel.add(textPanel, BorderLayout.CENTER);
+            JPanel moviePanel = new JPanel(new BorderLayout());
+            moviePanel.add(label, BorderLayout.NORTH);
 
-        panel.add(moviePanel);
+            JPanel textPanel = new JPanel(new GridLayout(2, 1));
+            JLabel titleLabel = new JLabel(currentMovie.getName());
+            JLabel genreLabel = new JLabel(currentMovie.getDetails());
+            textPanel.add(titleLabel);
+            textPanel.add(genreLabel);
+            moviePanel.add(textPanel, BorderLayout.CENTER);
+            panel.add(moviePanel);
+        }
+
     }
+
 }

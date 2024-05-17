@@ -1,16 +1,26 @@
 package org.example.theater.view.MoviesPage;
 
+import org.example.theater.model.Movie;
+import org.example.theater.model.Session;
+import org.example.theater.model.User;
+import org.example.theater.view.seatsPage.CinemaSeating;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BookingPage extends JFrame {
-    private ImageIcon moviePoster;
+    private String moviePoster;
     private String movieName;
+    Movie movie;
+    User user;
 
-    public BookingPage(ImageIcon moviePoster, String movieName) {
-        this.moviePoster = moviePoster;
-        this.movieName = movieName;
+    public BookingPage(Movie movie, User user) {
+        this.moviePoster = movie.getPosterUrl();
+        this.movieName = movie.getName();
 
         MouseListener mouseListener = new MouseAdapter() {
             public void mouseEntered(MouseEvent me) {
@@ -23,11 +33,14 @@ public class BookingPage extends JFrame {
         };
 
         setTitle("Booking - " + movieName);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new BorderLayout());
         getContentPane().setBackground(Color.DARK_GRAY);
-
-        JLabel posterLabel = new JLabel(moviePoster);
+        ImageIcon imageIcon = new ImageIcon(movie.getPosterUrl());
+        Image image = imageIcon.getImage();
+        Image scaledImage = image.getScaledInstance(200, 400, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(scaledImage);
+        JLabel posterLabel = new JLabel(imageIcon);
         add(posterLabel, BorderLayout.WEST);
 
         // Title panel
@@ -47,7 +60,12 @@ public class BookingPage extends JFrame {
         datePanel.setBackground(Color.DARK_GRAY);
         JLabel dateLabel = new JLabel("Select Date:");
         dateLabel.setForeground(Color.WHITE);
-        JComboBox<String> dateComboBox = new JComboBox<>(new String[]{"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
+        String[] dates=new String[movie.getSessions().length];
+        for (int i = 0; i < movie.getSessions().length; i++) {
+            dates[i]=movie.getSessions()[i].getDateTime();
+        }
+
+        JComboBox<String> dateComboBox = new JComboBox<>(dates);
         dateComboBox.setBackground(Color.DARK_GRAY);
         dateComboBox.setForeground(Color.WHITE);
         dateComboBox.setBorder(null);
@@ -56,17 +74,7 @@ public class BookingPage extends JFrame {
         selectionPanel.add(datePanel);
 
         // Time dropdown list
-        JPanel timePanel = new JPanel();
-        timePanel.setBackground(Color.DARK_GRAY);
-        JLabel timeLabel = new JLabel("Select Time:");
-        timeLabel.setForeground(Color.WHITE);
-        JComboBox<String> timeComboBox = new JComboBox<>(new String[]{"6:00 AM", "8:00 PM", "10:00 PM", "12:00 AM"});
-        timeComboBox.setBackground(Color.DARK_GRAY);
-        timeComboBox.setForeground(Color.WHITE);
-        timeComboBox.setBorder(null);
-        timePanel.add(timeLabel);
-        timePanel.add(timeComboBox);
-        selectionPanel.add(timePanel);
+
 
         // Confirmation button panel
         JPanel buttonPanel = new JPanel();
@@ -80,8 +88,17 @@ public class BookingPage extends JFrame {
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: save booking details to database
-                JOptionPane.showMessageDialog(null, "Booking confirmed for " + movieName + " on " + dateComboBox.getSelectedItem() + " at " + timeComboBox.getSelectedItem());
+                String date=(String)dateComboBox.getSelectedItem();
+                Session session=new Session();
+                for (Session obj : movie.getSessions()) {
+                    if (obj.getDateTime() == date) {
+                        session=obj;
+                    }
+                }
+                System.out.println(movie.getId());
+                new CinemaSeating(movie, user, session);
+
+                setVisible(false);
             }
         });
 
@@ -103,11 +120,5 @@ public class BookingPage extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new BookingPage(new ImageIcon("moviePoster.jpg"), "Movie Name");
-            }
-        });
-    }
-}
+     }
+

@@ -15,8 +15,14 @@ import java.util.stream.Collectors;
 
 public class MovieHandler {
     private static final String JSON_FILE = "C:\\Users\\mohan\\eclipse-workspace\\theater_project\\java\\src\\main\\java\\org\\example\\theater\\movies.json";
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
     private List<Movie> movies;
     private int nextMovieId;
+
     public MovieHandler() {
         loadMovies();
 

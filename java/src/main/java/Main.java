@@ -1,7 +1,10 @@
  import org.example.theater.dataHandler.MovieHandler;
  import org.example.theater.dataHandler.UserHandler;
  import org.example.theater.model.*;
+ import org.example.theater.view.MoviesPage.MoviePosterGrid;
 
+ import javax.swing.*;
+ import java.awt.*;
  import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
@@ -10,14 +13,12 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+//         MovieHandler movieHandler =new MovieHandler();
+//         Session[] sessions=new Session[]{new Session("2024-8-5",new ArrayList<>())};
+//         Movie movie1=new Movie("ghost buster","ghosting","C:\\Users\\mohan\\eclipse-workspace\\theater_project\\java\\src\\main\\java\\org\\example\\theater\\assets\\images\\ghost_busters.jpg",sessions);
+//         movieHandler.addMovie(movie1);
+        User mainUser=null;
+        MoviePosterGrid movieGrid=new MoviePosterGrid(mainUser);
 
-        MovieHandler moveHandler = new MovieHandler();
-        UserHandler userHandler=new UserHandler();
-
-        Session session= moveHandler.getMovieById(1).getSessions()[0];
-
-        ReservationForm[] forms = new ReservationForm[]{new ReservationForm(1, Arrays.asList(session))};
-        User currentUser = new User("mohannad", "mosdhannaddfmadi12ad@gmail.com", "2123123", forms);
-userHandler.signUp(currentUser);
     }
 }

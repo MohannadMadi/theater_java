@@ -1,10 +1,13 @@
 package org.example.theater.view.seatsPage;
 
+import org.example.theater.model.Movie;
+import org.example.theater.model.Session;
+import org.example.theater.model.User;
+import org.example.theater.view.loginPage.LoginPage;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class CinemaSeating extends JFrame {
 
@@ -14,13 +17,15 @@ public class CinemaSeating extends JFrame {
     private static final int SECOND_CLASS_COLS = 5;
     private static final int THIRD_CLASS_ROWS = 10;
     private static final int THIRD_CLASS_COLS = 5;
-
-    public CinemaSeating() {
+    User user;
+Movie movie;
+Session session;
+    public CinemaSeating(Movie movie, User user, Session session) {
         setTitle("Cinema Seating");
         setSize(400, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
+        setVisible(true);
         // Screen Panel
         JPanel screenPanel = new JPanel(new GridBagLayout());
         screenPanel.setBackground(Color.CYAN);
@@ -35,16 +40,16 @@ public class CinemaSeating extends JFrame {
         mainSeatsPanel.setBackground(Color.DARK_GRAY);
 
         // First Class Panel
-        JPanel firstClassPanel = createClassPanel("First Class", FIRST_CLASS_ROWS, FIRST_CLASS_COLS);
+        JPanel firstClassPanel = createClassPanel("First Class", FIRST_CLASS_ROWS, FIRST_CLASS_COLS,movie);
         mainSeatsPanel.add(firstClassPanel);
 
         // Second Class Panel
-        JPanel secondClassPanel = createClassPanel("Second Class", SECOND_CLASS_ROWS, SECOND_CLASS_COLS);
+        JPanel secondClassPanel = createClassPanel("Second Class", SECOND_CLASS_ROWS, SECOND_CLASS_COLS,movie);
         mainSeatsPanel.add(Box.createVerticalStrut(20));
         mainSeatsPanel.add(secondClassPanel);
 
         // Third Class Panel
-        JPanel thirdClassPanel = createClassPanel("Third Class", THIRD_CLASS_ROWS, THIRD_CLASS_COLS);
+        JPanel thirdClassPanel = createClassPanel("Third Class", THIRD_CLASS_ROWS, THIRD_CLASS_COLS,movie);
         mainSeatsPanel.add(Box.createVerticalStrut(20));
         mainSeatsPanel.add(thirdClassPanel);
 
@@ -62,7 +67,7 @@ public class CinemaSeating extends JFrame {
         add(paddedSeatsPanel, BorderLayout.CENTER);
     }
 
-    private JPanel createClassPanel(String className, int rows, int cols) {
+    private JPanel createClassPanel(String className, int rows, int cols,Movie movie) {
         JPanel classPanel = new JPanel(new BorderLayout());
         JLabel classLabel = new JLabel(className);
         classLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,9 +84,20 @@ public class CinemaSeating extends JFrame {
             for (int j = 0; j < cols; j++) {
                 int seatNumber = (i * cols) + j + 1;
                 SeatButton seatButton = new SeatButton(seatNumber);
+                seatButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (user==null){
+                            System.out
+                                    .println(movie.getName());
+                            new LoginPage(movie,session);
+                        }
+                    }
+                });
+
                 seatButton.setBackground(Color.WHITE);
                 seatButton.putClientProperty("originalColor", Color.WHITE);
-                seatButton.addMouseListener(createMouseListener());
+
                 rowPanel.add(seatButton);
             }
             classSeatsPanel.add(rowPanel);
@@ -94,6 +110,7 @@ public class CinemaSeating extends JFrame {
 
     private MouseListener createMouseListener() {
         return new MouseAdapter() {
+
             @Override
             public void mouseEntered(MouseEvent me) {
                 ((JComponent) me.getSource()).setBackground(Color.CYAN);
@@ -110,8 +127,10 @@ public class CinemaSeating extends JFrame {
 
     // Custom Seat Buttons
     class SeatButton extends JButton {
+
         private static final int SIZE = 30;
         private final int seatNumber;
+        Color color=Color.CYAN;
 
         public SeatButton(int seatNumber) {
             this.seatNumber = seatNumber;
@@ -120,6 +139,8 @@ public class CinemaSeating extends JFrame {
             setFocusPainted(false);
             setBorderPainted(false);
         }
+
+
 
         @Override
         protected void paintComponent(Graphics g) {
@@ -149,10 +170,5 @@ public class CinemaSeating extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            CinemaSeating frame = new CinemaSeating();
-            frame.setVisible(true);
-        });
-    }
-}
+
+ }
