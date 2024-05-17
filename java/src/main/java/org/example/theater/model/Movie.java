@@ -1,4 +1,5 @@
 package org.example.theater.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,29 +10,31 @@ import javax.swing.ImageIcon;
  
  
 public class Movie {
-    private static int id=0;
+
+
+    private  int id;
     private String name;
     private String details;
-    private ImageIcon poster;
+    private String posterUrl;
     private Session[] sessions;
 
     public Movie(){
         id++;
     }
-    public Movie(String name, String details, ImageIcon poster, Session[] sessions) {
+    public Movie(String name, String details, String poster, Session[] sessions) {
         this.name = name;
         this.details = details;
-        this.poster = poster;
+        this.posterUrl = poster;
         this.sessions = sessions;
-        id++;
+
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Movie.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -50,12 +53,12 @@ public class Movie {
         this.details = details;
     }
 
-    public ImageIcon getPoster() {
-        return poster;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setPoster(ImageIcon poster) {
-        this.poster = poster;
+    public void setPoster(String poster) {
+        this.posterUrl = poster;
     }
 
     public Session[] getSessions() {

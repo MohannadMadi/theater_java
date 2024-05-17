@@ -1,18 +1,34 @@
 package org.example.theater.model;
 
-
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 public class Session {
-    static int id=0;
-    LocalDateTime dateTimes;
-    Seat[] seats=new Seat[110];
-    public Session(){
-        id++;
+    private LocalDateTime dateTime;
+    private List<Integer> takenSeatIds;
+
+    public Session() {
     }
-    public Session(LocalDateTime dateTimes) {
-        this.dateTimes = dateTimes;
-        id++;
+
+    public Session(LocalDateTime dateTime, List<Integer> takenSeatIds) {
+        this.dateTime = dateTime;
+        this.takenSeatIds = takenSeatIds;
+    }
+
+    // Getters and setters
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public List<Integer> getTakenSeatIds() {
+        return takenSeatIds;
+    }
+
+    public void setTakenSeatIds(List<Integer> takenSeatIds) {
+        this.takenSeatIds = takenSeatIds;
     }
 }

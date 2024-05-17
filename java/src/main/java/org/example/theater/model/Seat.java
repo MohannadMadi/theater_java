@@ -1,17 +1,19 @@
 package org.example.theater.model;
 
-
-import java.time.LocalDateTime;
-
 public class Seat {
-    int id=0;
-    
-    User owner;
-    Movie movie;
-    boolean available;
-    double price;
-    LocalDateTime sLocalDateTime;
-    Seat(){
-        id++;
+    private int id;
+    private boolean taken;
+
+    public Seat(int id, boolean taken) {
+        this.id = id;
+        this.taken = taken;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isTaken() {
+        return taken;
     }
 }
