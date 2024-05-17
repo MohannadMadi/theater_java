@@ -1,6 +1,5 @@
-package view.MoviesPage;import java.awt.*;
-
-
+package view.MoviesPage;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 

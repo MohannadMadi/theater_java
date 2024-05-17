@@ -1,6 +1,5 @@
 package view.loginPage;
 
-import com.google.firebase.auth.FirebaseAuth;
 
 public class asasy {
 

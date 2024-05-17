@@ -16,7 +16,7 @@ class Session{
 }
 
 public class Movie {
-    private static int id;
+    private static int id=0;
     private String name;
     private String details;
     private ImageIcon poster;
@@ -27,6 +27,7 @@ public class Movie {
         this.details = details;
         this.poster = poster;
         this.sessions = sessions;
+        id++;
     }
 
     public static int getId() {
@@ -68,7 +69,6 @@ public class Movie {
     public void setSessions(Session[] sessions) {
         this.sessions = sessions;
     }
-Movie[] movies={new Movie("\"src\\\\theater_project\\\\assets\\\\\\\\Media\\\\\\\\ghost_busters.jpg\"", "Adventure | Comedy | Sci-Fi", new ImageIcon("src\\\\theater_project\\\\assets\\\\\\\\Media\\\\\\\\ghost_busters.jpg"), new Session[]{new Session(LocalDateTime.of(2024, 8, 1, 8, 0, 0))})};
 
 }
 
