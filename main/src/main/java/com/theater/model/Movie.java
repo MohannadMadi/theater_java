@@ -68,7 +68,6 @@ public class Movie {
 
     public void setSessions(Session[] sessions) {
         this.sessions = sessions;
-    }
-
 }
 
+}
