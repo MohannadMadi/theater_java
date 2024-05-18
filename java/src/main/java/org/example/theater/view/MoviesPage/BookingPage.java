@@ -19,8 +19,8 @@ public class BookingPage extends JFrame {
     User user;
 
     public BookingPage(Movie movie, User user) {
-        this.moviePoster = movie.getPosterUrl();
-        this.movieName = movie.getName();
+        this.movie=movie;
+        this.user=user;
 
         MouseListener mouseListener = new MouseAdapter() {
             public void mouseEntered(MouseEvent me) {

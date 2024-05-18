@@ -3,7 +3,6 @@ package org.example.theater.dataHandler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.theater.model.ReservationForm;
 import org.example.theater.model.Session;
 import org.example.theater.model.User;
 
@@ -11,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserHandler {
     private static final String JSON_FILE = "C:\\Users\\mohan\\eclipse-workspace\\theater_project\\java\\src\\main\\java\\org\\example\\theater\\Users.json";
@@ -86,23 +86,17 @@ public class UserHandler {
             e.printStackTrace();
         }
     }
-    public void editUser(int userId, int sessionId,String name, String email, String password,List<Session>sessions ) {
-        for (User user : users) {
-            if (user.getUid() == userId) {
-                for (Session session : user.getSelectedSessionsData()) {
-                    if (session.getId()==sessionId&&session.getMovieId()== session.getMovieId()){
-                        user.setName(name);
-                        user.setEmail(email);
-                        user.setPassword(password);
-                        user.setSelectedSessionsData(sessions);
-                        saveUsers(); // Save changes to the JSON file
-                        return; // Exit the method after updating
-
-                    }
-
-                }
-                }
+    public void editUser(int userId, String name, String email, String password, List<Session> sessions) {
+        Optional<User> optionalUser = users.stream().filter(user -> user.getUid() == userId).findFirst();
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setSelectedSessionsData(sessions);
+            saveUsers(); // Save changes to the JSON file
+        } else {
+            System.out.println("User not found with userId: " + userId);
         }
-        System.out.println("User not found with userId: " + userId);
     }
 }

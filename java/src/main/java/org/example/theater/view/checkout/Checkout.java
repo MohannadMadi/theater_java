@@ -1,10 +1,21 @@
 package org.example.theater.view.checkout;
 
+import org.example.theater.dataHandler.MovieHandler;
+import org.example.theater.dataHandler.UserHandler;
+import org.example.theater.model.Movie;
+import org.example.theater.model.Session;
+import org.example.theater.model.User;
+import org.example.theater.view.MoviesPage.MoviePosterGrid;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class Checout extends JFrame {
+public class Checkout extends JFrame {
     private JLabel priceLabel;
     private JLabel firstClassLabel;
     private JLabel secondClassLabel;
@@ -29,22 +40,20 @@ public class Checout extends JFrame {
         }
 
         public void mouseExited(MouseEvent me) {
-            ((JComponent) me.getSource()).setForeground(Color.white);
+            ((JComponent) me.getSource()).setForeground(Color.WHITE);
         }
     };
 
-    public Checout(double totalPrice, int firstClassSeats, int secondClassSeats, int thirdClassSeats) {
+    public Checkout(double totalPrice, int firstClassSeats, int secondClassSeats, int thirdClassSeats, Movie movie, User user, Session session, List<Integer> newSeats,List<Integer> cancelled) {
         setTitle("Checkout Page");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBackground(Color.DARK_GRAY);
-        setForeground(Color.WHITE);
         setLocationRelativeTo(null);
 
-        initComponents(totalPrice, firstClassSeats, secondClassSeats, thirdClassSeats);
+        initComponents(totalPrice, firstClassSeats, secondClassSeats, thirdClassSeats, movie, user, session, newSeats,cancelled);
     }
 
-    private void initComponents(double totalPrice, int firstClassSeats, int secondClassSeats, int thirdClassSeats) {
+    private void initComponents(double totalPrice, int firstClassSeats, int secondClassSeats, int thirdClassSeats, Movie movie, User user, Session session, List<Integer> newSeats, List<Integer> cancelled) {
         priceLabel = new JLabel("Total Price: $" + totalPrice);
         priceLabel.setForeground(Color.WHITE);
         firstClassLabel = new JLabel("First Class Seats: " + firstClassSeats);
@@ -59,11 +68,34 @@ public class Checout extends JFrame {
         checkoutButton.setBorder(null);
         checkoutButton.addMouseListener(mouseListener);
 
-
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Todo: Add Logic
+                UserHandler userHandler = new UserHandler();
+
+
+                Set<Integer> set = new HashSet<>(newSeats);
+                List<Integer> listWithoutDuplicates = new ArrayList<>(set);
+                newSeats.clear();
+                newSeats.addAll(listWithoutDuplicates);
+                  user.editSessions(session,newSeats);
+                userHandler.editUser(user.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getSelectedSessionsData());
+
+                MovieHandler movieHandler = new MovieHandler();
+                List<Integer> lis = session.getTakenSeatIds();
+
+                session.getTakenSeatIds().addAll(newSeats);
+                session.getTakenSeatIds().removeAll(cancelled);
+
+
+                Set<Integer> set2= new HashSet<>(session.getTakenSeatIds());
+                List<Integer> listWithoutDuplicates2 = new ArrayList<>(set);
+                session.getTakenSeatIds().clear();
+                session.getTakenSeatIds().addAll(listWithoutDuplicates2);
+                movieHandler.editSessionInMovie(session);
+
+                new MoviePosterGrid(user);
+                dispose();
             }
         });
 
@@ -77,6 +109,4 @@ public class Checout extends JFrame {
         getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
-
-
 }

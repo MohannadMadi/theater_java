@@ -85,10 +85,10 @@ Session session;
                 UserHandler userHandler=new UserHandler();
 
 
-                List<Session> forms= Arrays.asList(session);
+                List<Session> forms= Arrays.asList(new Session(movie.getId(), session.getId(), "",new ArrayList<>(110)));
                 User user=new User("",userID,password,forms);
                 userHandler.signUp(user);
-                new CinemaSeating(movie,user,session);
+                CinemaSeating cinemaSeating =new CinemaSeating(movie,user,session);
                 frame.dispose();
             }else {
                 JOptionPane.showMessageDialog(this.frame, "error signing up, please fill in your data"   ,"", JOptionPane.ERROR_MESSAGE);
@@ -103,7 +103,7 @@ Session session;
             UserHandler userHandler=new UserHandler();
             User user=userHandler.signIn(userID,password);
              if (user!=null){
-                 user.editSessions(session);
+                 user.editSessions(new Session(movie.getId(), session.getId(), session.getDateTime(),null),new ArrayList<>(110));
                 new CinemaSeating(movie,user,session);
                 frame.dispose();
 

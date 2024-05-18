@@ -1,1 +1,1 @@
-[{"uid":1,"name":"","email":"mohannadmadi12@gmail.com","password":"1234","selectedSessionsData":[{"id":1,"movieId":1,"dateTime":"2024-8-5","takenSeatIds":[1]}]}]
+[{"uid":1,"name":"","email":"1","password":"1","selectedSessionsData":[{"id":2,"movieId":2,"dateTime":"","takenSeatIds":[23,40,44]}]},{"uid":2,"name":"","email":"3","password":"3","selectedSessionsData":[{"id":2,"movieId":2,"dateTime":"","takenSeatIds":[]}]}]
