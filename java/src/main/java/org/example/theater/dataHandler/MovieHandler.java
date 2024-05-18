@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MovieHandler {
@@ -59,6 +60,7 @@ public class MovieHandler {
 
     public void addMovie(Movie movie) {
         movie.setId(nextMovieId); // Assign unique ID to the movie
+
         movies.add(movie);
         saveMovies();
     }
@@ -78,7 +80,21 @@ public class MovieHandler {
                 .orElse(null);
     }
 
-
+    public void editSessionInMovie( Session newSession) {
+        Optional<Movie> optionalMovie = movies.stream().filter(movie -> movie.getId() == newSession.getMovieId() ).findFirst();
+        if (optionalMovie.isPresent()) {
+            Movie movie = optionalMovie.get();
+            for (Session session : movie.getSessions()) {
+                if (session.getId() == newSession.getId()) {
+                    session.setDateTime(newSession.getDateTime());
+                    session.setTakenSeatIds(newSession.getTakenSeatIds());
+                    session.setMovieId(newSession.getMovieId());
+                    break;
+                }
+            }
+            saveMovies(); // Save changes to the movie list
+        }
+    }
 
     // Other methods for manipulating movie data
 }

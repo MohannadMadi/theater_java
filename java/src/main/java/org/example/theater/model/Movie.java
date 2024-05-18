@@ -19,7 +19,7 @@ public class Movie {
     private Session[] sessions;
 
     public Movie(){
-        id++;
+
     }
     public Movie(String name, String details, String poster, Session[] sessions) {
         this.name = name;
@@ -69,4 +69,14 @@ public class Movie {
         this.sessions = sessions;
 }
 
+    public Session getSessionById(int sessionId) {
+        // Iterate through the sessions array
+        for (Session session : sessions) {
+            // Check if the session ID matches the specified session ID
+            if (session.getId() == sessionId) {
+                return session; // Return the session if found
+            }
+        }
+        return null; // Return null if session with the specified ID is not found
+    }
 }

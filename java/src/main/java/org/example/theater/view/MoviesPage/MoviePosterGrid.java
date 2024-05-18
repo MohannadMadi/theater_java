@@ -55,6 +55,7 @@ public class MoviePosterGrid {
                 Movie movie=movieHandler.getMovieById(movieId);
                 System.out.println(movie.getId());
                 new BookingPage(movie,user);
+                frame.dispose();
             }
         };
         addMovies(moviePostersPanel,width,height,movieClickListener);

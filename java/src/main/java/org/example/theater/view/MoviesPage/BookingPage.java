@@ -98,7 +98,7 @@ public class BookingPage extends JFrame {
                 System.out.println(movie.getId());
                 new CinemaSeating(movie, user, session);
 
-                setVisible(false);
+                dispose();
             }
         });
 

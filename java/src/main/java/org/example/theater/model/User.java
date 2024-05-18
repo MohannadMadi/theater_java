@@ -1,22 +1,27 @@
 package org.example.theater.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private   int uid;
     private String name;
     private String email;
     private String password;
-    private ReservationForm[] reservationForms;
+    List<Session> selectedSessionsData;
+
 User(){}
-    public User(String name, String email, String password, ReservationForm []reservationForm) {
+
+    public User( String name, String email, String password, List<Session> selectedSessionsData) {
+        this.uid = uid;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.reservationForms=reservationForm;
+        this.selectedSessionsData = selectedSessionsData;
     }
 
-
-    public  int getUid() {
+    public int getUid() {
         return uid;
     }
 
@@ -48,12 +53,39 @@ User(){}
         this.password = password;
     }
 
-
-    public ReservationForm[] getReservationForms() {
-        return reservationForms;
+    public List<Session> getSelectedSessionsData() {
+        return selectedSessionsData;
     }
 
-    public void setReservationForms(ReservationForm[] reservationForms) {
-        this.reservationForms = reservationForms;
+    public void setSelectedSessionsData(List<Session> selectedSessionsData) {
+        this.selectedSessionsData = selectedSessionsData;
+    }
+
+    public Session getSessionById(Session session) {
+        // Iterate through the sessions array
+        for (Session s : selectedSessionsData) {
+            // Check if the session ID matches the specified session ID
+            if (s.getId() == session.getId()&&s.getMovieId()== session.getMovieId()) {
+                return s; // Return the session if found
+            }
+        }
+        return null; // Return null if session with the specified ID is not found
+    }
+    public void editSessions(Session newSession) {
+        // Iterate through the list of selected sessions
+        for (int i = 0; i < selectedSessionsData.size(); i++) {
+            Session session = selectedSessionsData.get(i);
+            // Check if the session exists based on movieId and sessionId
+            if (session.getMovieId() == newSession.getMovieId() && session.getId() == newSession.getId()) {
+                // Replace the existing session with the new session
+                selectedSessionsData.set(i, newSession);
+                return; // Exit the method after replacing
+            }
+        }
+        // If the session does not exist, add the new sessionnew
+
+
+        newSession.setTakenSeatIds(new ArrayList<>(110));
+        selectedSessionsData.add(newSession);
     }
 }

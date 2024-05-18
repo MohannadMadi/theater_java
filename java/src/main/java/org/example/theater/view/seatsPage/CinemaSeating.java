@@ -3,11 +3,16 @@ package org.example.theater.view.seatsPage;
 import org.example.theater.model.Movie;
 import org.example.theater.model.Session;
 import org.example.theater.model.User;
+import org.example.theater.view.checkout.Checout;
 import org.example.theater.view.loginPage.LoginPage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.example.theater.view.checkout.Checout.calculateCost;
 
 public class CinemaSeating extends JFrame {
 
@@ -20,7 +25,15 @@ public class CinemaSeating extends JFrame {
     User user;
 Movie movie;
 Session session;
+
+List<Integer> pickedSeats=new ArrayList<>(110);
     public CinemaSeating(Movie movie, User user, Session session) {
+        this.session=session;
+        this.movie=movie;
+        this.user=user;
+        if (user!=null){
+            pickedSeats=user.getSessionById(session).getTakenSeatIds();
+        }
         setTitle("Cinema Seating");
         setSize(400, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +46,24 @@ Session session;
         JLabel screenLabel = new JLabel("SCREEN");
         screenLabel.setForeground(Color.BLACK);
         screenPanel.add(screenLabel);
+        JButton resetButton = new JButton("reset");
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.setPreferredSize(new Dimension(80, 30));        checkoutButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int firstClassSeats = 10;
+                        int secondClassSeats = 20;
+                        int thirdClassSeats = 30;
+                        Checout checkoutPage = new Checout(
+                                calculateCost(firstClassSeats, secondClassSeats, thirdClassSeats),
+                                firstClassSeats, secondClassSeats, thirdClassSeats
+                        );
+                    }
+                }
+        );
+        add(resetButton, BorderLayout.EAST);
+        add(checkoutButton, BorderLayout.SOUTH);
 
         // Main Seats Panel
         JPanel mainSeatsPanel = new JPanel();
@@ -52,6 +83,19 @@ Session session;
         JPanel thirdClassPanel = createClassPanel("Third Class", THIRD_CLASS_ROWS, THIRD_CLASS_COLS,movie);
         mainSeatsPanel.add(Box.createVerticalStrut(20));
         mainSeatsPanel.add(thirdClassPanel);
+
+        resetButton.setPreferredSize(new Dimension(80, 30));
+        resetButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pickedSeats=new ArrayList<>(110);
+                        user.getSessionById(session).setTakenSeatIds(pickedSeats);
+                        new CinemaSeating(movie,user,session);
+                        dispose();
+                    }
+                }
+        );
 
         // Padding around the seats panel
         JPanel paddedSeatsPanel = new JPanel(new BorderLayout());
@@ -74,6 +118,7 @@ Session session;
         classLabel.setForeground(Color.WHITE);
         classPanel.add(classLabel, BorderLayout.NORTH);
 
+
         JPanel classSeatsPanel = new JPanel(new GridLayout(rows, 1, 2, 1));
         classSeatsPanel.setBackground(Color.DARK_GRAY);
 
@@ -82,8 +127,8 @@ Session session;
             rowPanel.setBackground(Color.DARK_GRAY);
 
             for (int j = 0; j < cols; j++) {
-                int seatNumber = (i * cols) + j + 1;
-                SeatButton seatButton = new SeatButton(seatNumber);
+
+                SeatButton seatButton = new SeatButton();
                 seatButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -91,11 +136,29 @@ Session session;
                             System.out
                                     .println(movie.getName());
                             new LoginPage(movie,session);
-                        }
+                            dispose();
+                        }else {
+                            if (!pickedSeats.contains(seatButton.seatNumber)&& !(movie.getSessionById(session.getId())!=null&& movie.getSessionById(session.getId()).getTakenSeatIds().contains(seatButton.seatNumber))){
+                                pickedSeats.add(seatButton.seatNumber);
+//                                movie.getSessionById();
+                                seatButton.setBackground(Color.magenta);
+                            }else {
+                                pickedSeats.remove(pickedSeats.indexOf(seatButton.seatNumber));
+                                seatButton.setBackground(Color.WHITE);
+
+                            }
+                         }
                     }
                 });
+                if (pickedSeats.contains(seatButton.seatNumber)&&user!=null){
+                    seatButton.setBackground(Color.magenta);
+                } else if (  session.getTakenSeatIds().contains(seatButton.seatNumber)) {
+                    seatButton.setBackground(Color.DARK_GRAY);
+                    seatButton.enable(false);
+                }else {
+                    seatButton.setBackground(Color.white);
 
-                seatButton.setBackground(Color.WHITE);
+                }
                 seatButton.putClientProperty("originalColor", Color.WHITE);
 
                 rowPanel.add(seatButton);
@@ -131,9 +194,14 @@ Session session;
         private static final int SIZE = 30;
         private final int seatNumber;
         Color color=Color.CYAN;
+        static int globalnum=1;
 
-        public SeatButton(int seatNumber) {
-            this.seatNumber = seatNumber;
+        public SeatButton() {
+            if (globalnum==110){
+                globalnum=0;
+            }
+            this.seatNumber = globalnum++;
+
             setPreferredSize(new Dimension(SIZE, SIZE));
             setContentAreaFilled(false);
             setFocusPainted(false);

@@ -13,12 +13,14 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-//         MovieHandler movieHandler =new MovieHandler();
+         MovieHandler movieHandler =new MovieHandler();
+
+         movieHandler.editSessionInMovie(new Session(1,1,"d",new ArrayList<>(110)));
 //         Session[] sessions=new Session[]{new Session("2024-8-5",new ArrayList<>())};
 //         Movie movie1=new Movie("ghost buster","ghosting","C:\\Users\\mohan\\eclipse-workspace\\theater_project\\java\\src\\main\\java\\org\\example\\theater\\assets\\images\\ghost_busters.jpg",sessions);
 //         movieHandler.addMovie(movie1);
         User mainUser=null;
         MoviePosterGrid movieGrid=new MoviePosterGrid(mainUser);
 
-    }
+     }
 }

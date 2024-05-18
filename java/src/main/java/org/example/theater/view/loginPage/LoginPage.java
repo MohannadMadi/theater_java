@@ -84,9 +84,15 @@ Session session;
             if (userID!=""&&password!=""){
                 UserHandler userHandler=new UserHandler();
 
-                ReservationForm form = new ReservationForm(movie.getId(), Arrays.asList(session));
-                ReservationForm[] forms=new ReservationForm[]{form};
-                userHandler.signUp(new User("",userID,password,forms));
+
+                List<Session> forms= Arrays.asList(session);
+                User user=new User("",userID,password,forms);
+                userHandler.signUp(user);
+                new CinemaSeating(movie,user,session);
+                frame.dispose();
+            }else {
+                JOptionPane.showMessageDialog(this.frame, "error signing up, please fill in your data"   ,"", JOptionPane.ERROR_MESSAGE);
+
             }
         }
 
@@ -96,11 +102,14 @@ Session session;
             String password = String.valueOf(userPasswordField.getPassword());
             UserHandler userHandler=new UserHandler();
             User user=userHandler.signIn(userID,password);
-            if (user!=null){
+             if (user!=null){
+                 user.editSessions(session);
                 new CinemaSeating(movie,user,session);
+                frame.dispose();
+
             }
             else {
-                JOptionPane.showMessageDialog(this.frame, "error logging in, try signing up"   ,"ad", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.frame, "error logging in, please use correct credentials"   ,"", JOptionPane.ERROR_MESSAGE);
             }
         }
 

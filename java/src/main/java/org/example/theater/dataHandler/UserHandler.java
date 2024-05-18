@@ -3,6 +3,8 @@ package org.example.theater.dataHandler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.theater.model.ReservationForm;
+import org.example.theater.model.Session;
 import org.example.theater.model.User;
 
 import java.io.File;
@@ -83,5 +85,24 @@ public class UserHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void editUser(int userId, int sessionId,String name, String email, String password,List<Session>sessions ) {
+        for (User user : users) {
+            if (user.getUid() == userId) {
+                for (Session session : user.getSelectedSessionsData()) {
+                    if (session.getId()==sessionId&&session.getMovieId()== session.getMovieId()){
+                        user.setName(name);
+                        user.setEmail(email);
+                        user.setPassword(password);
+                        user.setSelectedSessionsData(sessions);
+                        saveUsers(); // Save changes to the JSON file
+                        return; // Exit the method after updating
+
+                    }
+
+                }
+                }
+        }
+        System.out.println("User not found with userId: " + userId);
     }
 }
