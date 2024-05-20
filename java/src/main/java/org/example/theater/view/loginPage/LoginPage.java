@@ -1,21 +1,19 @@
 package org.example.theater.view.loginPage;
 
-
+import org.apache.commons.lang.SystemUtils;
 import org.example.theater.dataHandler.UserHandler;
 import org.example.theater.model.Movie;
-import org.example.theater.model.ReservationForm;
 import org.example.theater.model.Session;
 import org.example.theater.model.User;
 import org.example.theater.view.seatsPage.CinemaSeating;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.util.List;
 import javax.swing.*;
-
-
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class LoginPage implements ActionListener{
 
     JFrame frame = new JFrame();
@@ -83,12 +81,10 @@ Session session;
             String password = String.valueOf(userPasswordField.getPassword());
             if (userID!=""&&password!=""){
                 UserHandler userHandler=new UserHandler();
-
-
-                List<Session> forms= Arrays.asList(new Session(movie.getId(), session.getId(), "",new ArrayList<>(110)));
+            List<Session> forms= Arrays.asList(new Session(movie.getId(), session.getId(), "",new ArrayList<>(110)));
                 User user=new User("",userID,password,forms);
                 userHandler.signUp(user);
-                CinemaSeating cinemaSeating =new CinemaSeating(movie,user,session);
+new CinemaSeating(movie,user,session);
                 frame.dispose();
             }else {
                 JOptionPane.showMessageDialog(this.frame, "error signing up, please fill in your data"   ,"", JOptionPane.ERROR_MESSAGE);
@@ -101,9 +97,13 @@ Session session;
             String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
             UserHandler userHandler=new UserHandler();
+            
             User user=userHandler.signIn(userID,password);
              if (user!=null){
-                 user.editSessions(new Session(movie.getId(), session.getId(), session.getDateTime(),null),new ArrayList<>(110));
+                if (user.getSessionById(session)==null) {
+                    user.getSelectedSessionsData().add(new Session(session.getId(),session.getMovieId(),session.getDateTime(),new ArrayList<>(110)));
+                    System.err.println(user.getSessionById(session).getId());
+                }
                 new CinemaSeating(movie,user,session);
                 frame.dispose();
 

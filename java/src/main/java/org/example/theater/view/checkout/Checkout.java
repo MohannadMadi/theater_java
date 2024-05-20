@@ -78,18 +78,17 @@ public class Checkout extends JFrame {
                 List<Integer> listWithoutDuplicates = new ArrayList<>(set);
                 newSeats.clear();
                 newSeats.addAll(listWithoutDuplicates);
-                  user.editSessions(session,newSeats);
+                user.editSessions(session,newSeats);
                 userHandler.editUser(user.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getSelectedSessionsData());
 
                 MovieHandler movieHandler = new MovieHandler();
-                List<Integer> lis = session.getTakenSeatIds();
-
+ 
                 session.getTakenSeatIds().addAll(newSeats);
                 session.getTakenSeatIds().removeAll(cancelled);
 
 
                 Set<Integer> set2= new HashSet<>(session.getTakenSeatIds());
-                List<Integer> listWithoutDuplicates2 = new ArrayList<>(set);
+                List<Integer> listWithoutDuplicates2 = new ArrayList<>(set2);
                 session.getTakenSeatIds().clear();
                 session.getTakenSeatIds().addAll(listWithoutDuplicates2);
                 movieHandler.editSessionInMovie(session);

@@ -53,7 +53,7 @@ public class MoviePosterGrid {
                 Integer movieId = (Integer) clickedLabel.getClientProperty("id");
                 MovieHandler movieHandler=new MovieHandler();
                 Movie movie=movieHandler.getMovieById(movieId);
-                System.out.println(movie.getId());
+                System.out.println(movie.getSessionById(1).getTakenSeatIds().get(0));
                 new BookingPage(movie,user);
                 frame.dispose();
             }
@@ -78,8 +78,10 @@ public class MoviePosterGrid {
 
     private static void addMovies(JPanel panel, int width, int height, MouseListener listener) {
         MovieHandler movieHandler=new MovieHandler();
+
+        
         for (int i = 0; i <movieHandler.getMovies().size() ; i++) {
-            Movie currentMovie=movieHandler.getMovies().get(i);
+            Movie currentMovie=movieHandler.getMovies().get(i);            
             ImageIcon imageIcon = new ImageIcon(currentMovie.getPosterUrl());
             Image image = imageIcon.getImage();
             Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -102,5 +104,8 @@ public class MoviePosterGrid {
         }
 
     }
-
 }
+
+
+
+

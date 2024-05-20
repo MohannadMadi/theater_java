@@ -38,6 +38,7 @@ public class MovieHandler {
         if (file.exists()) {
             try {
                 movies = mapper.readValue(file, new TypeReference<List<Movie>>() {});
+                
                 // Set nextMovieId to the value of the last movie's ID + 1
             if (movies.size()>0){
                 nextMovieId = movies.getLast().getId()+1;
@@ -89,9 +90,13 @@ public class MovieHandler {
                     session.setDateTime(newSession.getDateTime());
                     session.setTakenSeatIds(newSession.getTakenSeatIds());
                     session.setMovieId(newSession.getMovieId());
-                    break;
-                }
+                    System.err.println("not added");
+                    saveMovies(); // Save changes to the movie list
+
+                    return;
+                 }
             }
+            movie.getSessions().add(newSession);
             saveMovies(); // Save changes to the movie list
         }
     }

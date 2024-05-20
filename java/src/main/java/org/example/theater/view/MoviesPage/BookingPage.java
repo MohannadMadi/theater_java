@@ -46,7 +46,7 @@ public class BookingPage extends JFrame {
         // Title panel
         JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(Color.BLACK);
-        JLabel nameLabel = new JLabel("Movie: " + movieName, SwingConstants.CENTER);
+        JLabel nameLabel = new JLabel("Movie: " + movie.getName(), SwingConstants.CENTER);
         nameLabel.setForeground(Color.WHITE);
         titlePanel.add(nameLabel, BorderLayout.CENTER);
         add(titlePanel, BorderLayout.NORTH);
@@ -60,9 +60,9 @@ public class BookingPage extends JFrame {
         datePanel.setBackground(Color.DARK_GRAY);
         JLabel dateLabel = new JLabel("Select Date:");
         dateLabel.setForeground(Color.WHITE);
-        String[] dates=new String[movie.getSessions().length];
-        for (int i = 0; i < movie.getSessions().length; i++) {
-            dates[i]=movie.getSessions()[i].getDateTime();
+        String[] dates=new String[movie.getSessions().size()];
+        for (int i = 0; i < movie.getSessions().size(); i++) {
+            dates[i]=movie.getSessions().get(i).getDateTime();
         }
 
         JComboBox<String> dateComboBox = new JComboBox<>(dates);
@@ -89,13 +89,13 @@ public class BookingPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String date=(String)dateComboBox.getSelectedItem();
+                System.err.println(date);
                 Session session=new Session();
                 for (Session obj : movie.getSessions()) {
                     if (obj.getDateTime() == date) {
                         session=obj;
                     }
                 }
-                System.out.println(movie.getId());
                 new CinemaSeating(movie, user, session);
 
                 dispose();

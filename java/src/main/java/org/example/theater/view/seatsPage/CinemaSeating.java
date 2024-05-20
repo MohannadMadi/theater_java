@@ -3,6 +3,7 @@ package org.example.theater.view.seatsPage;
 import org.example.theater.model.Movie;
 import org.example.theater.model.Session;
 import org.example.theater.model.User;
+import org.example.theater.view.MoviesPage.MoviePosterGrid;
 import org.example.theater.view.checkout.Checkout;
 import org.example.theater.view.loginPage.LoginPage;
 
@@ -36,13 +37,17 @@ public class CinemaSeating extends JFrame {
         this.user = user;
 
         if (user != null) {
-            pickedSeats = new ArrayList<>(session.getTakenSeatIds());
+            System.err.println("in if "+user.getSessionById(session).getDateTime());
+            pickedSeats =  user.getSessionById(session).getTakenSeatIds();
+
         }
 
         setTitle("Cinema Seating");
-        setSize(800, 800);
+        setSize(800, 1100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        // setResizable(false);` // Disable resizing
+        setMinimumSize(new Dimension(400, 1100));
         setVisible(true);
 
         // Screen Panel
@@ -93,20 +98,27 @@ public class CinemaSeating extends JFrame {
                 }pickedSeats.addAll(user
                         .getSessionById(session).getTakenSeatIds());
                 pickedSeats.removeAll(canceledSeats);
+                if(!user.getSessionById(session).getTakenSeatIds().containsAll(pickedSeats)){
+                    new MoviePosterGrid(user);
+                    dispose();
+                }else{               
+                     new Checkout(
+                    calculateCost(firstClassSeats, secondClassSeats, thirdClassSeats),
+                    firstClassSeats, secondClassSeats, thirdClassSeats, movie, user, session, pickedSeats,canceledSeats
+            );
+            dispose();
 
-                Checkout checkoutPage = new Checkout(
-                        calculateCost(firstClassSeats, secondClassSeats, thirdClassSeats),
-                        firstClassSeats, secondClassSeats, thirdClassSeats, movie, user, session, pickedSeats,canceledSeats
-                );
+        }
 
-                dispose();
             }
         });
 
         resetButton.setPreferredSize(new Dimension(100, 30));
         resetButton.addActionListener(e -> {
             if (user != null) {
-                pickedSeats = new ArrayList<>(session.getTakenSeatIds());
+                pickedSeats = new ArrayList<>(110);
+                user.getSessionById(session).setTakenSeatIds(new ArrayList<>(110));
+                movie.getSessionById(session.getId()).setTakenSeatIds(new ArrayList<>(110));;
                 new CinemaSeating(movie, user, session);
                 dispose();
             }
@@ -142,7 +154,7 @@ public class CinemaSeating extends JFrame {
         classSeatsPanel.setBackground(Color.DARK_GRAY);
 
         for (int i = 0; i < rows; i++) {
-            JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 1));
+            JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 1));
             rowPanel.setBackground(Color.DARK_GRAY);
 
             for (int j = 0; j < cols; j++) {
@@ -168,7 +180,7 @@ public class CinemaSeating extends JFrame {
                             pickedSeats.add(seatButton.seatNumber);
                                 canceledSeats.remove((Integer) seatButton.seatNumber);
 
-                            seatButton.setBackground(Color.MAGENTA);
+                            seatButton.setBackground(new Color(123456));
                         }
                     }
                 });
@@ -203,8 +215,8 @@ public class CinemaSeating extends JFrame {
         static int global=1;
 
         public SeatButton() {
-            if (global==110){
-                global=0;
+            if (global==111){
+                global=1;
             }
             this.seatNumber = global++;
 

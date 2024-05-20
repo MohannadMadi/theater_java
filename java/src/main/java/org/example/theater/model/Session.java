@@ -8,6 +8,8 @@ public class Session {
     private String dateTime;
     private List<Integer> takenSeatIds;
 
+    
+
 
     public Session() {
     }
@@ -30,6 +32,7 @@ public class Session {
     }
 
     public List<Integer> getTakenSeatIds() {
+ 
         return takenSeatIds;
     }
 

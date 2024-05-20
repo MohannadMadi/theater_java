@@ -6,8 +6,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.swing.ImageIcon;
+import java.util.List;
 
- 
+import java.util.ArrayList;
+
  
 public class Movie {
 
@@ -16,12 +18,12 @@ public class Movie {
     private String name;
     private String details;
     private String posterUrl;
-    private Session[] sessions;
+    private List<Session>sessions;
 
     public Movie(){
 
     }
-    public Movie(String name, String details, String poster, Session[] sessions) {
+    public Movie(String name, String details, String poster, List<Session>sessions) {
         this.name = name;
         this.details = details;
         this.posterUrl = poster;
@@ -61,11 +63,11 @@ public class Movie {
         this.posterUrl = poster;
     }
 
-    public Session[] getSessions() {
+    public List<Session>getSessions() {
         return sessions;
     }
 
-    public void setSessions(Session[] sessions) {
+    public void setSessions(List<Session>sessions) {
         this.sessions = sessions;
 }
 
@@ -74,6 +76,9 @@ public class Movie {
         for (Session session : sessions) {
             // Check if the session ID matches the specified session ID
             if (session.getId() == sessionId) {
+                if (session.getTakenSeatIds().isEmpty()) {
+session.getTakenSeatIds().add(-1);                    
+                }
                 return session; // Return the session if found
             }
         }
