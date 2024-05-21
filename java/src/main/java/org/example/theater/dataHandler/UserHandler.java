@@ -48,6 +48,7 @@ public class UserHandler {
                 user.getPassword() != null && !user.getPassword().isEmpty()) { // Perform null and empty checks
             // Check if a user with the same email already exists
             if (getUserByEmail(user.getEmail()) == null) {
+
                 user.setUid(nextUid);
                 users.add(user);
                 saveUsers();

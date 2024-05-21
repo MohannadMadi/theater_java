@@ -37,8 +37,7 @@ public class CinemaSeating extends JFrame {
         this.user = user;
 
         if (user != null) {
-            System.err.println("in if "+user.getSessionById(session).getDateTime());
-            pickedSeats =  user.getSessionById(session).getTakenSeatIds();
+             pickedSeats =  user.getSessionById(session).getTakenSeatIds();
 
         }
 

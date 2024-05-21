@@ -79,12 +79,13 @@ Session session;
         if(e.getSource()== SignupButton) {
             String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
-            if (userID!=""&&password!=""){
+            if (!userID.isEmpty()&&!password.isEmpty()){
                 UserHandler userHandler=new UserHandler();
-            List<Session> forms= Arrays.asList(new Session(movie.getId(), session.getId(), "",new ArrayList<>(110)));
+            List<Session> forms= Arrays.asList();
+            forms.add(new Session(movie.getId(), session.getId(), session.getDateTime(),new ArrayList<>(110)));
                 User user=new User("",userID,password,forms);
                 userHandler.signUp(user);
-new CinemaSeating(movie,user,session);
+                new CinemaSeating(movie,user,session );
                 frame.dispose();
             }else {
                 JOptionPane.showMessageDialog(this.frame, "error signing up, please fill in your data"   ,"", JOptionPane.ERROR_MESSAGE);
