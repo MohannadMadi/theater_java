@@ -53,8 +53,7 @@ public class MoviePosterGrid {
                 Integer movieId = (Integer) clickedLabel.getClientProperty("id");
                 MovieHandler movieHandler=new MovieHandler();
                 Movie movie=movieHandler.getMovieById(movieId);
-                System.out.println(movie.getSessionById(1).getTakenSeatIds().get(0));
-                new BookingPage(movie,user);
+                 new BookingPage(movie,user);
                 frame.dispose();
             }
         };

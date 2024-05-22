@@ -37,7 +37,9 @@ public class CinemaSeating extends JFrame {
         this.user = user;
 
         if (user != null) {
-             pickedSeats =  user.getSessionById(session).getTakenSeatIds();
+             pickedSeats.addAll(user.getSessionById(session).getTakenSeatIds())  ;
+             System.err.println("session: "+user.getSessionById(session).getTakenSeatIds());
+
 
         }
 
@@ -94,10 +96,12 @@ public class CinemaSeating extends JFrame {
                     } else {
                         thirdClassSeats++;
                     }
-                }pickedSeats.addAll(user
+                }
+                pickedSeats.addAll(user
                         .getSessionById(session).getTakenSeatIds());
                 pickedSeats.removeAll(canceledSeats);
-                if(!user.getSessionById(session).getTakenSeatIds().containsAll(pickedSeats)){
+                System.err.println("session: "+user.getSessionById(session).getTakenSeatIds());
+                if(user.getSessionById(session).getTakenSeatIds().containsAll(pickedSeats)&&canceledSeats.isEmpty()){
                     new MoviePosterGrid(user);
                     dispose();
                 }else{               
@@ -175,11 +179,16 @@ public class CinemaSeating extends JFrame {
                             pickedSeats.remove((Integer) seatButton.seatNumber);
                             canceledSeats.add(seatButton.seatNumber);
                             seatButton.setBackground(Color.WHITE);
+                            
                         } else if (!session.getTakenSeatIds().contains(seatButton.seatNumber)) {
+                System.err.println("session1: "+user.getSessionById(session).getTakenSeatIds());
+
                             pickedSeats.add(seatButton.seatNumber);
                                 canceledSeats.remove((Integer) seatButton.seatNumber);
 
                             seatButton.setBackground(new Color(123456));
+                System.err.println("session2: "+user.getSessionById(session).getTakenSeatIds());
+
                         }
                     }
                 });

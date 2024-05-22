@@ -69,24 +69,27 @@ User(){}
                 return s; // Return the session if found
             }
         }
-        return null; // Return null if session with the specified ID is not found
+        return new Session(session.getId(), session.getMovieId(), session.getDateTime(),new ArrayList<>(110)); // Return null if session with the specified ID is not found
     }
-    public void editSessions(Session newSession,List<Integer> newSeats) {
+    public void editSessions(Session newSession, List<Integer> newSeats,List<Integer> cancelled) {
+        boolean sessionFound = false;
+    
         // Iterate through the list of selected sessions
-         for (int i = 0; i < selectedSessionsData.size(); i++) {
-            Session session = selectedSessionsData.get(i);
+        for (Session session : selectedSessionsData) {
             // Check if the session exists based on movieId and sessionId
             if (session.getMovieId() == newSession.getMovieId() && session.getId() == newSession.getId()) {
-                // Replace the existing session with the new session
-
-                selectedSessionsData.get(i).setTakenSeatIds(newSeats);
-
-             }
+                // Update the existing session with the new seats
+                session.setTakenSeatIds(newSeats);
+                session.getTakenSeatIds().removeAll(cancelled);
+                sessionFound = true;
+                break; // Exit the loop once the session is found and updated
+            }
         }
-
-
-        // If the session does not exist, add the new sessionnew
-
-         selectedSessionsData.add(new Session(newSession.getId(),newSession.getMovieId(),newSession.getDateTime(),new ArrayList<>(110)));
+    
+        // If the session does not exist, add the new session
+        if (!sessionFound) {
+            selectedSessionsData.add(new Session(newSession.getId(), newSession.getMovieId(), newSession.getDateTime(),newSeats));
+        }
     }
+    
 }

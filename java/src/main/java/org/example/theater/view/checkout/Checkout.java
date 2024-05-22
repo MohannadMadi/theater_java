@@ -78,7 +78,8 @@ public class Checkout extends JFrame {
                 List<Integer> listWithoutDuplicates = new ArrayList<>(set);
                 newSeats.clear();
                 newSeats.addAll(listWithoutDuplicates);
-                user.editSessions(session,newSeats);
+
+                user.editSessions(session,newSeats,cancelled);
                 userHandler.editUser(user.getUid(), user.getName(), user.getEmail(), user.getPassword(), user.getSelectedSessionsData());
 
                 MovieHandler movieHandler = new MovieHandler();
@@ -91,6 +92,9 @@ public class Checkout extends JFrame {
                 List<Integer> listWithoutDuplicates2 = new ArrayList<>(set2);
                 session.getTakenSeatIds().clear();
                 session.getTakenSeatIds().addAll(listWithoutDuplicates2);
+                for (Integer i : session.getTakenSeatIds()) {
+                    System.err.println("i: "+i);
+                }
                 movieHandler.editSessionInMovie(session);
 
                 new MoviePosterGrid(user);

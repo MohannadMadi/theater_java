@@ -76,9 +76,7 @@ public class Movie {
         for (Session session : sessions) {
             // Check if the session ID matches the specified session ID
             if (session.getId() == sessionId) {
-                if (session.getTakenSeatIds().isEmpty()) {
-session.getTakenSeatIds().add(-1);                    
-                }
+ 
                 return session; // Return the session if found
             }
         }

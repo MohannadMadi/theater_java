@@ -50,7 +50,9 @@ public class UserHandler {
             if (getUserByEmail(user.getEmail()) == null) {
 
                 user.setUid(nextUid);
+                
                 users.add(user);
+
                 saveUsers();
             } else {
                 System.out.println("User with the same email already exists. Unable to sign up.");

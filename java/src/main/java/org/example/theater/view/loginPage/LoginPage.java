@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,8 +83,7 @@ Session session;
             if (!userID.isEmpty()&&!password.isEmpty()){
                 UserHandler userHandler=new UserHandler();
             List<Session> forms= Arrays.asList();
-            forms.add(new Session(movie.getId(), session.getId(), session.getDateTime(),new ArrayList<>(110)));
-                User user=new User("",userID,password,forms);
+                User user=new User("",userID,password,Arrays.asList(new Session(session.getId(), movie.getId(), session.getDateTime(),new ArrayList<>(110))));
                 userHandler.signUp(user);
                 new CinemaSeating(movie,user,session );
                 frame.dispose();
